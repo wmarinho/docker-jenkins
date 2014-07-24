@@ -3,10 +3,11 @@ FROM wmarinho/ubuntu:oracle-jdk-7
 MAINTAINER Wellington Marinho wpmarinho@globo.com
 
 
-RUN wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
-RUN sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
+RUN wget -q http://mirrors.jenkins-ci.org/war/latest/jenkins.war -O /opt/jenkins.war
+RUN chmod 644 /opt/jenkins.war
+ENV JENKINS_HOME /jenkins
 
-RUN apt-get update -y &&\
-    apt-get install jenkins -y 
+ENTRYPOINT ["java", "-jar", "/opt/jenkins.war"]
 
 EXPOSE 8080
+#CMD [""]
